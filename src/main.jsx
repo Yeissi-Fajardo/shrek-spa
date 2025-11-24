@@ -1,11 +1,14 @@
+// src/main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import NoMatch from "./pages/NoMatch.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import NavBar from "./components/NavBar.jsx";
 
+// Páginas
 import Landing from "./pages/Landing.jsx";
 import Peliculas from "./pages/Peliculas.jsx";
 import Personajes from "./pages/Personajes.jsx";
@@ -14,15 +17,13 @@ import Productos from "./pages/Productos.jsx";
 import Foros from "./pages/Foros.jsx";
 import Login from "./pages/Login.jsx";
 import MiCuenta from "./pages/MiCuenta.jsx";
-import NoMatch from "./pages/NoMatch.jsx";
 
 import "./index.css";
 
 function App() {
   return (
     <AuthProvider>
-      {/* 👇 clave para GitHub Pages */}
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter>
         <NavBar />
         <div style={{ padding: "12px 16px" }}>
           <Routes>
@@ -33,8 +34,6 @@ function App() {
             <Route path="/productos" element={<Productos />} />
             <Route path="/foros" element={<Foros />} />
             <Route path="/login" element={<Login />} />
-
-            {/* Ruta protegida */}
             <Route
               path="/cuenta"
               element={
@@ -43,12 +42,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
-            {/* 404 */}
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
   );
 }
